@@ -19,9 +19,14 @@ bubblesort.o: bubblesort.c sortcommon.h
 bubblesort: main.o bubblesort.o
 	gcc -o bubblesort main.o bubblesort.o
 
+shellsort.o: shellsort.c sortcommon.h
+	gcc -c shellsort.c
+shellsort: main.o shellsort.o
+	gcc -o shellsort main.o shellsort.o
+
 clean:
 	rm *.o
 	rm *~
-	rm selectionsort insertionsort bubblesort
+	rm *sort
 
 

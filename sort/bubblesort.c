@@ -15,6 +15,9 @@
 void sort(Item a[], int l, int r)
 {
   int i,j;
+
+  printf("bubble sort ...\n");
+
   for (i = l; i < r; i++) {
     int ex = 0;
     
