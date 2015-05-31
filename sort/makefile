@@ -26,6 +26,11 @@ quicksort.o: quicksort.c sortcommon.h
 quicksort: main.o quicksort.o
 	gcc -o quicksort main.o quicksort.o
 
+mergesort.o: mergesort.c sortcommon.h
+	gcc -c mergesort.c
+mergesort: main.o mergesort.o
+	gcc -o mergesort main.o mergesort.o
+
 clean:
 	rm *.o
 	rm *~
