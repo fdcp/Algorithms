@@ -31,6 +31,11 @@ mergesort.o: mergesort.c sortcommon.h
 mergesort: main.o mergesort.o
 	gcc -o mergesort main.o mergesort.o
 
+heapsort.o: heapsort.c sortcommon.h
+	gcc -c heapsort.c
+heapsort: main.o heapsort.o
+	gcc -o heapsort main.o heapsort.o
+
 clean:
 	rm *.o
 	rm *~
