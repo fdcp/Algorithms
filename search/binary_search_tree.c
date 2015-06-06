@@ -131,3 +131,91 @@ void STinsert(Item item)
 {
   head = insertT(head, item);
 }
+
+/******************************************************
+ * select操作
+ * 在一棵BST树中找出第k个最小关键字的数据项。
+ * 检查左子树中的节点数目。如果左子树中存在k个节点，那么我们返回树根处的数据项。
+ * 否则，若左子树中有k个以上的节点，我们便递归在左子树中找出第k个最小关键字的
+ * 数据项。如果这两个条件都不成立，则左子树含有t个数据项且t<k，BST中带有k个
+ * 最小数据项就是右子树的第(k-t-1)个最小关键字数据项。
+ *****************************************************/
+Item selectR(link h, int k)
+{
+  int t;
+  if (h == z) return NULLitem;
+  t = (h->lchild == z) ? 0 : h->lchild->count;
+  if (t > k) {
+    return selectR(h->lchild, k);
+  } else if (t < k) {
+    return selectR(h->rchild, k-t-1);
+  } else {
+    return h->item;
+  }
+}
+Item STselect(int k)
+{
+  return selectR(head, k);
+}
+
+/**************************************************
+ * 划分操作（partition）
+ * 重排树，将第k个最小元素放在根节点。
+ **************************************************/
+link partR(link h, int k)
+{
+  int t = h->lchild->count;
+  if (t > k) {
+    h->lchild = partR(h->lchild, k);
+    h = rotR(h);
+  } else if (t < k) {
+    h->rchild = partR(h->rchild, k-t-1);
+    h = rotL(h);
+  }
+  return h;
+}
+
+/**************************************************
+ * 将两棵BST树合成一棵。
+ * 已知第二棵树的所有关键字都大于第一棵中的所有关键字。我们对
+ * 第二棵树应用划分操作，以便把其中最小的元素带到树根，此时，
+ * 这棵树的左子树必须为空，我们将第一个树设置成该根节点的左子树即可。
+ **************************************************/
+link joinR(link a, link b)
+{
+  if (b == z) {
+    return a;
+  }
+  b = partR(b, 0); 
+  b->lchild = a;
+  return b;
+}
+
+/**************************************************
+ * 从BST树中删除给定关键字的一个节点。
+ * 首先检查那个节点是否在其中的一个子树中。如果在子树中，用从
+ * 该子树中删除该节点的结构代替原来的子树。如果要删除的节点在根部，
+ * 我们用两棵子树合并成一棵树的结果代替原树。
+ **************************************************/
+link deleteR(link h, Key v)
+{
+  link x;
+  Key t = key(h->item);
+  if (h == z) {
+    return z;
+  }
+  if (less(v, t)) {
+    h->lchild = deleteR(h->lchild, v);
+  } else if (less(t, v)) {
+    h->rchild = deleteR(h->rchild, v);
+  } else {
+    x = h;
+    h = join(h->lchild, h->rchild);
+    free(x);
+  }
+  return h;
+}
+void STdelete(Key v)
+{
+  head = deleteR(head, v);
+}
