@@ -10,6 +10,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**************************************************
+ * 方法一：
+ *    循环k次，每次将字符串第一个字符移动到尾部。
+ *
+ * 算法时间复杂度：O(kn)，空间复杂度：O(1)
+ *************************************************/
 char *
 leftShiftOneChar(char *str)
 {
@@ -37,7 +43,6 @@ leftShift(char *str, int k)
   }
   return str;
 }
-
 
 int
 main(int argc, char **argv)
