@@ -16,6 +16,7 @@
  *
  * 算法时间复杂度：O(kn)，空间复杂度：O(1)
  *************************************************/
+/*
 char *
 leftShiftOneChar(char *str)
 {
@@ -41,6 +42,49 @@ leftShift(char *str, int k)
     leftShiftOneChar(str);
     --k;
   }
+  return str;
+}
+*/
+
+/*************************************************
+ * 方法二：
+ *    三步反转法。将一个字符串分成X和Y两部分，在部分字符串上
+ * 定义反转操作，如XT，即X的所有字符串反转（如，X="abc"，那
+ * 么XT="cba"）。那么就得到下面的结论：
+ *    (XTYT)^T = YX
+ * 于是，便解决了字符串移动的问题。
+ *
+ * 算法时间复杂度：O(n)，空间复杂度：O(1)
+ ************************************************/
+
+//对字符串str在[start, end)之间的子串进行反转操作。
+void
+reverse(char *str, int start, int end)
+{
+  if (str == NULL ||
+      start >= end) {
+    return;
+  }
+
+  int i,j;
+  for (i=start, j=end-1; i <= j; i++, j--) {
+    char tmp = str[i];
+    str[i] = str[j];
+    str[j] = tmp;
+  }
+}
+
+char *
+leftShift(char *str, int k)
+{
+  if (str == NULL || k < 1) {
+    return str;
+  }
+
+  k = k % strlen(str);
+  reverse(str, 0, k);
+  reverse(str, k, strlen(str)); 
+  reverse(str, 0, strlen(str));
   return str;
 }
 
