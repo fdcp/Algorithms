@@ -17,6 +17,10 @@
 int 
 isPalindromeFromTwoEnds(const char *str, int len)
 {
+  if (str == NULL || len < 0) {
+    return 0;
+  }
+
   const char *pa, *pb;
   pa = str;
   pb = str+len-1;
@@ -32,6 +36,10 @@ isPalindromeFromTwoEnds(const char *str, int len)
 int
 isPalindromeFromMiddle(const char *str, int len)
 {
+  if (str == NULL || len < 0) {
+    return 0;
+  }
+  
   const char *pa, *pb;
   pa = str + (len-1)/2;
   pb = str + len/2;
